@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Analysis App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Chartly.ai</h1>
+        <div id="drop-zone">
+            <p>Drag and drop Excel file here</p>
+            <input type="file" id="file-input" accept=".csv,.xlsx,.xls" style="display: none;">
+        </div>
+        <div id="error-message" class="error"></div>
+        <div id="loading-spinner" style="display: none;">
+            <div class="spinner"></div>
+            <p>Loading...</p>
+        </div>
+        <p>Upload an excel (.csv,.xlsx,.xls) openAI will attempt to draw 3 appropriate plots, mileage may vary.</p>
+        <a href="/example" class="button">View Example Analysis</a>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

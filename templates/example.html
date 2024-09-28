@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Analysis Results</h1>
+            <div class="chart-container">
+                <h2>Scatter Plot - Price vs. Engine Size</h2>
+                <p>A scatter plot is suitable to show the relationship between two continuous variables, in this case, the price and engine size of cars.</p>
+                <img src="../static/images/chart1.png" alt="Scatter Plot - Price vs. Engine Size">
+            </div>
+            <div class="chart-container">
+                <h2>Bar Chart - Brand Distribution</h2>
+                <p>A bar chart is suitable for displaying the distribution of categorical variables, in this case, the distribution of car brands.</p>
+                <img src="../static/images/chart2.png" alt="Bar Chart - Brand Distribution">
+            </div>
+            <div class="chart-container">
+                <h2>Histogram - Horsepower Distribution</h2>
+                <p>A histogram is suitable for visualizing the distribution of a continuous variable, in this case, the distribution of horsepower values.</p>
+                <img src="../static/images/chart3.png" alt="Histogram - Horsepower Distribution">
+            </div>
+        <a href="/" class="button">Analyze Another File</a>
+    </div>
+</body>
+</html>
