@@ -106,4 +106,4 @@ def analyze_and_generate_charts(df):
     return charts
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
