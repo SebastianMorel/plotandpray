@@ -30,6 +30,15 @@ def index():
 def example():
     return render_template('example.html')
 
+def read_file_with_flexible_delimiter(file):
+    file.seek(0)
+    sample = file.read(1024).decode('ISO-8859-1')
+    file.seek(0)
+    
+    delimiter = ',' if ',' in sample and ';' not in sample else ';'
+    
+    return pd.read_csv(file, delimiter=delimiter, encoding='ISO-8859-1', on_bad_lines='skip')
+
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
@@ -40,7 +49,7 @@ def upload_file():
     if file and allowed_file(file.filename):
         try:
             if file.filename.endswith('.csv'):
-                df = pd.read_csv(file, on_bad_lines='skip', encoding='ISO-8859-1')
+                df = read_file_with_flexible_delimiter(file)
             else:
                 df = pd.read_excel(file, on_bad_lines='skip', encoding='ISO-8859-1')
         except pd.errors.ParserError:
@@ -52,8 +61,8 @@ def upload_file():
         return jsonify({'error': 'File type not allowed'}), 400
 
 def analyze_and_generate_charts(df):
-    columns = df.columns.tolist()
-    sample_data = df.head(25).to_dict(orient='records')
+    columns = df.columns[:10].tolist()
+    sample_data = df.iloc[:, :10].head(25).to_dict(orient='records')
     
     prompt = f"""
     Given the following dataset information:
