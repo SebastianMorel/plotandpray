@@ -9,7 +9,6 @@ from dotenv import load_dotenv
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 load_dotenv()
 
@@ -51,11 +50,9 @@ def upload_file():
         return jsonify({'error': 'File type not allowed'}), 400
 
 def analyze_and_generate_charts(df):
-    # Get column names and first few rows
     columns = df.columns.tolist()
     sample_data = df.head(25).to_dict(orient='records')
     
-    # Prepare the prompt for OpenAI
     prompt = f"""
     Given the following dataset information:
     
