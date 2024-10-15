@@ -40,9 +40,9 @@ def upload_file():
     if file and allowed_file(file.filename):
         try:
             if file.filename.endswith('.csv'):
-                df = pd.read_csv(file, on_bad_lines='skip')
+                df = pd.read_csv(file, on_bad_lines='skip', encoding='ISO-8859-1')
             else:
-                df = pd.read_excel(file)
+                df = pd.read_excel(file, on_bad_lines='skip', encoding='ISO-8859-1')
         except pd.errors.ParserError:
             return jsonify({'error': 'Invalid CSV file format'}), 400
 
