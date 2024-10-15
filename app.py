@@ -39,9 +39,9 @@ def upload_file():
         return jsonify({'error': 'No selected file'}), 400
     if file and allowed_file(file.filename):
         if file.filename.endswith('.csv'):
-            df = pd.read_csv(file)
+            df = pd.read_csv(file, on_bad_lines='skip')
         else:
-            df = pd.read_excel(file)
+            df = pd.read_excel(file, on_bad_lines='skip')
         
         charts = analyze_and_generate_charts(df)
         
