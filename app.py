@@ -38,13 +38,15 @@ def upload_file():
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
     if file and allowed_file(file.filename):
-        if file.filename.endswith('.csv'):
-            df = pd.read_csv(file, on_bad_lines='skip')
-        else:
-            df = pd.read_excel(file, on_bad_lines='skip')
-        
+        try:
+            if file.filename.endswith('.csv'):
+                df = pd.read_csv(file, on_bad_lines='skip')
+            else:
+                df = pd.read_excel(file)
+        except pd.errors.ParserError:
+            return jsonify({'error': 'Invalid CSV file format'}), 400
+
         charts = analyze_and_generate_charts(df)
-        
         return render_template('result.html', charts=charts)
     else:
         return jsonify({'error': 'File type not allowed'}), 400
@@ -55,14 +57,12 @@ def analyze_and_generate_charts(df):
     
     prompt = f"""
     Given the following dataset information:
-    
     Column names: {columns}
     Sample data: {sample_data}
-    
     Please analyze this data and suggest 3 appropriate chart types. For each chart, provide:
     1. A brief explanation of why this chart is suitable.
     2. An appropriate title for the chart based on the data.
-    3. Python code using matplotlib to create the chart.
+    3. Python code using matplotlib to create the chart. Use the variable `df` to represent the dataset.
 
     Respond in the following format:
     Title: [Your chart title here]
