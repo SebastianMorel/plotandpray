@@ -34,9 +34,18 @@ def read_file_with_flexible_delimiter(file):
     file.seek(0)
     sample = file.read(1024).decode('ISO-8859-1')
     file.seek(0)
-    
-    delimiter = ',' if ',' in sample and ';' not in sample else ';'
-    
+
+    if ',' in sample and ';' not in sample:
+        delimiter = ','
+    elif ';' in sample:
+        delimiter = ';'
+    elif '\t' in sample:
+        delimiter = '\t'
+    elif '|' in sample:
+        delimiter = '|'
+    else:
+        raise ValueError('Unknown delimiter')
+
     return pd.read_csv(file, delimiter=delimiter, encoding='ISO-8859-1', on_bad_lines='skip')
 
 @app.route('/upload', methods=['POST'])
